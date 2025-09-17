@@ -19,15 +19,18 @@ type DaySteps struct {
 
 func (ds *DaySteps) Parse(datastring string) (err error) {
 	// TODO: реализовать функцию
-	data := strings.Split(datastring, ",")
-	if len(data) != 2 {
+	stepStr, durationStr, ok := strings.Cut(datastring, ",")
+	if !ok {
 		return fmt.Errorf("неверное количество данных")
 	}
-	ds.Steps, err = strconv.Atoi(data[0])
+	if stepStr == "" || durationStr == "" {
+		return fmt.Errorf("пустые данные")
+	}
+	ds.Steps, err = strconv.Atoi(stepStr)
 	if err != nil {
 		return fmt.Errorf("неверный формат количества шагов: %v", err)
 	}
-	ds.Duration, err = time.ParseDuration(data[1])
+	ds.Duration, err = time.ParseDuration(durationStr)
 	if err != nil {
 		return fmt.Errorf("неверный формат длительности: %v", err)
 	}

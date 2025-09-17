@@ -48,14 +48,14 @@ func (t Training) ActionInfo() (string, error) {
 		if err != nil {
 			return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: Бег\nДлительность: %.2f\nДистанция: %.2f\nСкорость: %.2f\nСожгли калорий: %.2f\n",
+		return fmt.Sprintf("Тип тренировки: Бег\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 			t.Duration.Hours(), distance, meanSpeed, callories), nil
 	case "Ходьба":
 		callories, err := spentenergy.WalkingSpentCalories(t.Steps, t.Personal.Weight, t.Personal.Height, t.Duration)
 		if err != nil {
 			return "", err
 		}
-		return fmt.Sprintf("Тип тренировки: Ходьба\nДлительность: %.2f\nДистанция: %.2f\nСкорость: %.2f\nСожгли калорий: %.2f\n",
+		return fmt.Sprintf("Тип тренировки: Ходьба\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 			t.Duration.Hours(), distance, meanSpeed, callories), nil
 	default:
 		return "", fmt.Errorf("неизвестный тип тренировки")
