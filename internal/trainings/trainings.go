@@ -27,12 +27,17 @@ func (t *Training) Parse(datastring string) (err error) {
 	t.Steps, err = strconv.Atoi(data[0])
 	if err != nil {
 		return fmt.Errorf("неверный формат количества шагов: %v", err)
+	} else if t.Steps <= 0 {
+		return fmt.Errorf("количество шагов должно быть больше нуля")
 	}
 	t.TrainingType = data[1]
 
 	t.Duration, err = time.ParseDuration(data[2])
 	if err != nil {
 		return fmt.Errorf("неверный формат длительности тренировки: %v", err)
+	}
+	if t.Duration <= 0 {
+		return fmt.Errorf("длительность тренировки должна быть больше нуля")
 	}
 	return nil
 }

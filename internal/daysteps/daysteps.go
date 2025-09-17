@@ -23,17 +23,20 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	if !ok {
 		return fmt.Errorf("неверное количество данных")
 	}
-	if stepStr == "" || durationStr == "" {
-		return fmt.Errorf("пустые данные")
-	}
-	ds.Steps, err = strconv.Atoi(stepStr)
+	steps, err := strconv.Atoi(stepStr)
 	if err != nil {
 		return fmt.Errorf("неверный формат количества шагов: %v", err)
+	} else if steps <= 0 {
+		return fmt.Errorf("количество шагов должно быть больше нуля")
 	}
-	ds.Duration, err = time.ParseDuration(durationStr)
+	duration, err := time.ParseDuration(durationStr)
 	if err != nil {
 		return fmt.Errorf("неверный формат длительности: %v", err)
 	}
+	if duration <= 0 {
+		return fmt.Errorf("длительность должна быть больше нуля")
+	}
+	ds.Duration, ds.Steps = duration, steps
 	return nil
 }
 
